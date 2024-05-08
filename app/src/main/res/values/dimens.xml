@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="top_padding">4dp</dimen>
+    <dimen name="bottom_padding">28dp</dimen>
+    <dimen name="side_padding">14dp</dimen>
+    <dimen name="icon_Padding">8dp</dimen>
+</resources>
