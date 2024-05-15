@@ -2,12 +2,9 @@ package com.example.playlistmaker
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
@@ -25,20 +22,18 @@ class MainActivity : AppCompatActivity() {
         val buttonMediaLibrary: Button = findViewById(R.id.button_media_library)
         val buttonSettings: Button = findViewById(R.id.button_settings)
 
-        val buttonClickListener: View.OnClickListener = object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                Toast.makeText(this@MainActivity, "Нажали на кнопку Поиск!", Toast.LENGTH_SHORT).show()
-            }
+        buttonSearch.setOnClickListener{
+            val intentSearch = Intent(this, SearchActivity::class.java)
+            startActivity(intentSearch)
         }
 
-        buttonSearch.setOnClickListener(buttonClickListener)
-
         buttonMediaLibrary.setOnClickListener {
-            Toast.makeText(this@MainActivity, "Нажали на кнопку Медиатека!", Toast.LENGTH_SHORT).show()
+            val intentMedia = Intent(this, MediaLibraryActivity::class.java)
+            startActivity(intentMedia)
         }
 
         buttonSettings.setOnClickListener {
-            Toast.makeText(this@MainActivity, "Нажали на кнопку Настройки!", Toast.LENGTH_SHORT).show()
-        }
+            val intentSettings = Intent(this, SettingsActivity::class.java)
+            startActivity(intentSettings)        }
     }
 }
