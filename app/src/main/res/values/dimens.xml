@@ -4,4 +4,12 @@
     <dimen name="bottom_padding">28dp</dimen>
     <dimen name="side_padding">14dp</dimen>
     <dimen name="icon_Padding">8dp</dimen>
+    <dimen name="corner_Radius_button">16dp</dimen>
+    <dimen name="text_size">22sp</dimen>
+    <dimen name="padding_bottom_title">40dp</dimen>
+    <dimen name="text_size_settings">16sp</dimen>
+    <dimen name="layout_height_settings">61dp</dimen>
+    <dimen name="padding_top_title">10dp</dimen>
+    <dimen name="image_view_height_and_width">16dp</dimen>
+
 </resources>

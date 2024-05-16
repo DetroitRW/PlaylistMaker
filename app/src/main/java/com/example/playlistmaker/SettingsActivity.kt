@@ -22,8 +22,7 @@ class SettingsActivity: AppCompatActivity() {
         val imageViewBack: ImageView = findViewById(R.id.imageViewBack)
 
         imageViewBack.setOnClickListener {
-            val intentBack = Intent(this, MainActivity::class.java)
-            startActivity(intentBack)
+            finish()
         }
     }
 }
