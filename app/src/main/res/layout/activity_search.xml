@@ -1,10 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/search"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:theme="@style/Base.Theme.PlaylistMaker"
     tools:context=".SearchActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/buttonBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/side_padding"
+        android:layout_marginTop="@dimen/padding_top_title"
+        android:layout_marginRight="@dimen/side_padding"
+        android:layout_marginBottom="20dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageViewBack"
+            style="@style/IconBackTintStyle"
+            android:layout_width="@dimen/image_view_height_and_width"
+            android:layout_height="@dimen/image_view_height_and_width"
+            android:layout_gravity="center_vertical"
+            app:srcCompat="@drawable/ic_back" />
+
+        <TextView
+            android:id="@+id/textViewSearch"
+            style="@style/HighText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/padding_left_text_title"
+            android:text="@string/search"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_marginLeft="@dimen/side_padding"
+        android:layout_marginTop="@dimen/padding_top_title"
+        android:layout_marginRight="@dimen/side_padding"
+        android:layout_marginBottom="@dimen/padding_bottom_title"
+        android:background="@drawable/background_search"
+        android:orientation="horizontal"
+        style="@style/IconTintSearch"
+        >
+
+        <ImageView
+            android:id="@+id/imageViewSearch"
+            android:layout_width="18dp"
+            android:layout_height="16dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginVertical="@dimen/layout_marginVertical_for_icon"
+            android:layout_marginStart="@dimen/layout_marginStart_and_end_for_icon"
+            app:srcCompat="@drawable/search_picture"
+            style="@style/IconTintSearch"
+
+            />
+
+        <EditText
+            android:id="@+id/editTextSearch"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/icon_Padding"
+            android:layout_weight="1"
+            android:autofillHints="true"
+            android:background="@drawable/background_search"
+            android:hint="@string/search"
+            android:inputType="text"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/text_size_settings"
+            android:maxLines="1"
+            style="@style/EditTextHintColor"
+            />
+
+        <ImageView
+            android:id="@+id/imageViewReset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginVertical="@dimen/layout_marginVertical_for_icon"
+            android:layout_marginEnd="@dimen/layout_marginStart_and_end_for_icon"
+            app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
+            style="@style/IconTintSearch"
+            android:visibility="invisible"
+             />
+    </LinearLayout>
+
+</LinearLayout>

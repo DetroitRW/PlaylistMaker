@@ -40,4 +40,15 @@
     <style name="IconSettingsTintStyle">
         <item name="android:tint">@color/white</item>
     </style>
+
+    <style name="IconTintSearch">
+        <item name="android:tint">@color/text_black</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:backgroundTint">@color/white</item>
+    </style>
+
+    <style name="EditTextHintColor">
+        <item name="android:textColorHint">@color/text_black</item>
+        <item name="android:backgroundTint">@color/white</item>
+    </style>
 </resources>

@@ -40,4 +40,15 @@
     <style name="IconSettingsTintStyle">
         <item name="android:tint">@color/icon_settings_color</item>
     </style>
+
+    <style name="IconTintSearch">
+        <item name="android:tint">@color/grey_for_icon</item>
+        <item name="android:background">@color/grey</item>
+        <item name="android:backgroundTint">@color/grey</item>
+    </style>
+
+    <style name="EditTextHintColor">
+        <item name="android:textColorHint">@color/grey_for_icon</item>
+        <item name="android:backgroundTint">@color/grey</item>
+    </style>
 </resources>

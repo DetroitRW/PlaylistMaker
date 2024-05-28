@@ -11,5 +11,9 @@
     <dimen name="layout_height_settings">61dp</dimen>
     <dimen name="padding_top_title">10dp</dimen>
     <dimen name="image_view_height_and_width">16dp</dimen>
+    <dimen name="padding_left_text_title">24dp</dimen>
+    <dimen name="layout_marginVertical_for_icon">10dp</dimen>
+    <dimen name="layout_marginStart_and_end_for_icon">10dp</dimen>
+
 
 </resources>

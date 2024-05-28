@@ -35,7 +35,7 @@
             android:id="@+id/textViewSettings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="24dp"
+            android:paddingLeft="@dimen/padding_left_text_title"
             android:text="@string/settings"
             style="@style/HighText"/>
     </LinearLayout>
