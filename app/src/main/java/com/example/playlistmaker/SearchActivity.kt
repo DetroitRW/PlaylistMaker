@@ -15,6 +15,11 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isInvisible
 
 class SearchActivity : AppCompatActivity() {
+    private var searchText: String? = null
+    private lateinit var editTextSearch: EditText
+    companion object {
+        const val SEARCH_TEXT = "SEARCH_TEXT"
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -26,7 +31,8 @@ class SearchActivity : AppCompatActivity() {
         }
         val imageViewBack: ImageView = findViewById(R.id.imageViewBack)
         val imageViewReset: ImageView = findViewById(R.id.imageViewReset)
-        val editTextSearch: EditText = findViewById(R.id.editTextSearch)
+        editTextSearch = findViewById(R.id.editTextSearch)
+
 
         imageViewBack.setOnClickListener {
             finish()
@@ -50,6 +56,7 @@ class SearchActivity : AppCompatActivity() {
                     imageViewReset.visibility = View.INVISIBLE
                 } else {
                     imageViewReset.visibility = View.VISIBLE
+                    searchText = s.toString()
                 }
             }
 
@@ -57,6 +64,21 @@ class SearchActivity : AppCompatActivity() {
             }
         }
         editTextSearch.addTextChangedListener(simpleTextWatcher)
+
+        if (savedInstanceState != null) {
+            searchText = savedInstanceState.getString(SEARCH_TEXT)
+            editTextSearch.setText(searchText)
+        }
+    }
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(SEARCH_TEXT, searchText)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        searchText = savedInstanceState.getString(SEARCH_TEXT)
+        editTextSearch.setText(searchText)
     }
 
     private fun hideKeyboard() {
