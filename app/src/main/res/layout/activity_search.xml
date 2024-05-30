@@ -53,44 +53,45 @@
 
         <ImageView
             android:id="@+id/imageViewSearch"
+            style="@style/IconTintSearch"
             android:layout_width="18dp"
             android:layout_height="16dp"
             android:layout_gravity="center_vertical"
             android:layout_marginVertical="@dimen/layout_marginVertical_for_icon"
             android:layout_marginStart="@dimen/layout_marginStart_and_end_for_icon"
-            app:srcCompat="@drawable/search_picture"
-            style="@style/IconTintSearch"
+            app:srcCompat="@drawable/search_picture" />
 
-            />
-
-        <EditText
-            android:id="@+id/editTextSearch"
-            android:layout_width="0dp"
+        <FrameLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/icon_Padding"
-            android:layout_weight="1"
-            android:autofillHints="true"
             android:background="@drawable/background_search"
-            android:hint="@string/search"
-            android:inputType="text"
-            android:textColor="@color/text_black"
-            android:textSize="@dimen/text_size_settings"
-            android:maxLines="1"
-            style="@style/EditTextHintColor"
-            />
-
-        <ImageView
-            android:id="@+id/imageViewReset"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginVertical="@dimen/layout_marginVertical_for_icon"
-            android:layout_marginEnd="@dimen/layout_marginStart_and_end_for_icon"
-            app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
             style="@style/IconTintSearch"
-            android:visibility="invisible"
-             />
+            >
+
+            <EditText
+                android:id="@+id/editTextSearch"
+                style="@style/EditTextHintColor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/layout_marginStart_and_end_for_icon"
+                android:autofillHints="true"
+                android:hint="@string/search"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/text_size_settings"
+                android:paddingVertical="0dp"/>
+
+            <ImageView
+                android:id="@+id/imageViewReset"
+                style="@style/IconTintSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:visibility="invisible"
+                app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
+                tools:visibility="visible" />
+        </FrameLayout>
     </LinearLayout>
 
 </LinearLayout>
