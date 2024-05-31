@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="MainButtonStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/text_black</item>
+        <item name="android:textSize">@dimen/text_size</item>
+        <item name="cornerRadius">@dimen/corner_Radius_button</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconPadding">@dimen/icon_Padding</item>
+        <item name="iconTint">@color/black</item>
+        <item name="fontFamily">@font/ys_display_medium</item>
+        <item name="android:textFontWeight">500</item>
+    </style>
+    
+    <style name="LowTextSettingActivity">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/text_size_settings</item>
+        <item name="fontFamily">@font/ys_display_regular</item>
+        <item name="android:textFontWeight">400</item>
+    </style>
+
+    <style name="HighText">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/text_size</item>
+        <item name="fontFamily">@font/ys_display_medium</item>
+        <item name="android:textFontWeight">500</item>
+    </style>
+
+    <style name="IconBackTintStyle">
+        <item name="android:tint">@color/text_black</item>
+    </style>
+
+    <style name="IconSettingsTintStyle">
+        <item name="android:tint">@color/icon_settings_color</item>
+    </style>
+
+    <style name="IconTintSearch">
+        <item name="android:tint">@color/grey_for_icon</item>
+        <item name="android:background">@color/grey</item>
+        <item name="android:backgroundTint">@color/grey</item>
+    </style>
+
+    <style name="EditTextHintColor">
+        <item name="android:textColorHint">@color/grey_for_icon</item>
+        <item name="android:backgroundTint">@color/grey</item>
+        <item name="android:textSize">@dimen/text_size_settings</item>
+        <item name="fontFamily">@font/ys_display_regular</item>
+        <item name="android:textFontWeight">400</item>
+    </style>
+</resources>

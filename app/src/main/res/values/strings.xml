@@ -7,5 +7,12 @@
     <string name="Share_app">Поделиться приложением</string>
     <string name="Write_to_support">Написать в поддержку</string>
     <string name="Terms_of_use">Пользовательское соглашение</string>
-
+    <string name="Hi_look">Привет! Посмотри этот крутой курс по Андроид-разработке в Практикуме:</string>
+    <string name="practicum_yandex_ru_android_developer">https://practicum.yandex.ru/android-developer/</string>
+    <string name="My_mail">ilya_brant@mail.ru</string>
+    <string name="send_developer">Сообщение разработчикам и разработчицам приложения Playlist Maker</string>
+    <string name="senks">Спасибо разработчикам и разработчицам за крутое приложение!</string>
+    <string name="pochtovi_client_ne_ystanovlen">Почтовый клиент не установлен</string>
+    <string name="practicum_yandex_ru_offerta">https://yandex.ru/legal/practicum_offer/</string>
+    <string name="brauser_client_ne_ystanovlen">Браузер не установлен</string>
 </resources>

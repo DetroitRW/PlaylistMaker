@@ -6,6 +6,7 @@ out/
 # IntelliJ
 *.iml
 .idea/
+.gradle/
 misc.xml
 deploymentTargetDropDown.xml
 render.experimental.xml

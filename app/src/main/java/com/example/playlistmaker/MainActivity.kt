@@ -1,10 +1,12 @@
 package com.example.playlistmaker
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
@@ -21,6 +23,13 @@ class MainActivity : AppCompatActivity() {
         val buttonSearch: Button = findViewById(R.id.button_search)
         val buttonMediaLibrary: Button = findViewById(R.id.button_media_library)
         val buttonSettings: Button = findViewById(R.id.button_settings)
+
+        val sharedPreferences = getSharedPreferences("Mode", Context.MODE_PRIVATE)
+        val nightMode = sharedPreferences.getBoolean(SettingsActivity.NIGHT, false)
+
+        if (nightMode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }
 
         buttonSearch.setOnClickListener{
             val intentSearch = Intent(this, SearchActivity::class.java)

@@ -6,7 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".SettingsActivity">
+    tools:context=".SettingsActivity"
+    android:theme="@style/Base.Theme.PlaylistMaker"
+    >
 
     <LinearLayout
         android:id="@+id/buttonBack"
@@ -25,17 +27,17 @@
             android:layout_width="@dimen/image_view_height_and_width"
             android:layout_height="@dimen/image_view_height_and_width"
             android:layout_gravity="center_vertical"
-            app:srcCompat="@drawable/ic_back" />
+            app:srcCompat="@drawable/ic_back"
+            style="@style/IconBackTintStyle"
+            />
 
         <TextView
             android:id="@+id/textViewSettings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="24dp"
+            android:paddingLeft="@dimen/padding_left_text_title"
             android:text="@string/settings"
-            android:textColor="@color/text_black"
-            android:textSize="@dimen/text_size"
-            android:textStyle="bold" />
+            style="@style/HighText"/>
     </LinearLayout>
 
     <LinearLayout
@@ -48,18 +50,14 @@
 
         <TextView
             android:id="@+id/textViewNightThemes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/dark_themes"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_size_settings" />
+            style="@style/LowTextSettingActivity"/>
 
         <Switch
             android:id="@+id/switchThemes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            />
 
     </LinearLayout>
 
@@ -73,18 +71,16 @@
 
         <TextView
             android:id="@+id/textViewShareApp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/Share_app"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_size_settings" />
+            style="@style/LowTextSettingActivity"/>
 
         <ImageView
             android:id="@+id/imageViewShare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_share" />
+            app:srcCompat="@drawable/ic_share"
+            style="@style/IconSettingsTintStyle"
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -97,18 +93,16 @@
 
         <TextView
             android:id="@+id/textViewSupport"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/Write_to_support"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_size_settings" />
+            style="@style/LowTextSettingActivity"/>
 
         <ImageView
             android:id="@+id/imageViewSupport"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/support" />
+            app:srcCompat="@drawable/support"
+            style="@style/IconSettingsTintStyle"
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -121,18 +115,15 @@
 
         <TextView
             android:id="@+id/textViewTermsOfUse"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/Terms_of_use"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_size_settings" />
+            style="@style/LowTextSettingActivity"/>
 
         <ImageView
             android:id="@+id/imageViewArrowNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_arrow_next" />
+            app:srcCompat="@drawable/ic_arrow_next"
+            style="@style/IconSettingsTintStyle"/>
 
     </LinearLayout>
 
