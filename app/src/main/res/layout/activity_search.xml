@@ -87,11 +87,20 @@
                 style="@style/IconTintSearch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/layout_marginStart_and_end_for_icon"
                 android:layout_gravity="center_vertical|end"
                 android:visibility="invisible"
-                app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
+                app:srcCompat="@drawable/ic_clear"
                 tools:visibility="visible" />
         </FrameLayout>
     </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/side_padding"
+        android:layout_marginEnd="@dimen/side_padding"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
 </LinearLayout>
