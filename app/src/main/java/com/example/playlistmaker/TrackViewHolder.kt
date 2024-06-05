@@ -19,7 +19,7 @@ class TrackViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
             .load(model.artworkUrl100)
             .centerCrop()
             .transform(RoundedCorners(2))
-            .placeholder(R.drawable.ic_launcher_background)
+            .placeholder(R.drawable.placeholder)
             .into(songPicture)
         trackName.text = model.trackName
         artistName.text = model.artistName
