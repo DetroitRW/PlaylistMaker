@@ -14,6 +14,9 @@
     <dimen name="padding_left_text_title">24dp</dimen>
     <dimen name="layout_marginVertical_for_icon">10dp</dimen>
     <dimen name="layout_marginStart_and_end_for_icon">12dp</dimen>
+    <dimen name="text_size_artist_name">11sp</dimen>
+    <dimen name="picture_height_and_width">45dp</dimen>
+    <dimen name="text_view_height">20dp</dimen>
 
 
 </resources>

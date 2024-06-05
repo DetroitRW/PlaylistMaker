@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/layout_height_settings">
+
+    <ImageView
+        android:id="@+id/imageViewNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_arrow_next"
+        style="@style/IconSettingsTintStyle"/>
+
+    <ImageView
+        android:id="@+id/imageViewSongPicture"
+        android:layout_width="@dimen/picture_height_and_width"
+        android:layout_height="@dimen/picture_height_and_width"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_background" />
+
+    <TextView
+        android:id="@+id/textViewTrackName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/icon_Padding"
+        android:layout_marginTop="@dimen/side_padding"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewNext"
+        app:layout_constraintStart_toEndOf="@+id/imageViewSongPicture"
+        app:layout_constraintTop_toTopOf="parent"
+        android:ellipsize="end"
+        android:maxLines="1"
+        style="@style/LowTextSettingActivity"/>
+
+    <TextView
+        android:id="@+id/textViewArtistName"
+        style="@style/LowTextSettingActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/icon_Padding"
+        android:layout_marginTop="1dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/grey_for_icon"
+        android:textSize="@dimen/text_size_artist_name"
+        android:tooltipText="The Beatles"
+        app:layout_constraintStart_toEndOf="@+id/imageViewSongPicture"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTrackName" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+
+        app:layout_constraintStart_toEndOf="@+id/textViewArtistName"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTrackName"
+        app:srcCompat="@drawable/ic_dot" />
+
+    <TextView
+        android:id="@+id/textViewTrackTime"
+        style="@style/LowTextSettingActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/grey_for_icon"
+        android:textSize="@dimen/text_size_artist_name"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTrackName" />
+</androidx.constraintlayout.widget.ConstraintLayout>
