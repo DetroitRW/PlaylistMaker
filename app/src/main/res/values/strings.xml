@@ -15,4 +15,8 @@
     <string name="pochtovi_client_ne_ystanovlen">Почтовый клиент не установлен</string>
     <string name="practicum_yandex_ru_offerta">https://yandex.ru/legal/practicum_offer/</string>
     <string name="brauser_client_ne_ystanovlen">Браузер не установлен</string>
+    <string name="Nothing_found">Ничего не нашлось</string>
+    <string name="Communication_problems">"             "Проблемы со связью\n\nЗагрузка не удалась. Проверьте\n"       "подключение к интернету</string>
+    <string name="Update">Обновить</string>
+
 </resources>
