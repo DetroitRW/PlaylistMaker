@@ -80,7 +80,9 @@
                 android:maxLines="1"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_size_settings"
-                android:paddingVertical="0dp"/>
+                android:paddingVertical="0dp"
+                android:imeOptions="actionDone"
+                android:singleLine="true"/>
 
             <ImageView
                 android:id="@+id/imageViewReset"
@@ -95,12 +97,59 @@
         </FrameLayout>
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/side_padding"
-        android:layout_marginEnd="@dimen/side_padding"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+       >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/side_padding"
+            android:layout_marginEnd="@dimen/side_padding"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        <LinearLayout
+            android:id="@+id/linerLayoutError"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/padding_left_text_title"
+            android:layout_marginEnd="@dimen/padding_left_text_title"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/imageViewError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/layout_height_settings"
+                android:visibility="visible"
+                app:srcCompat="@drawable/communication_problems"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/textViewError"
+                style="@style/HighText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_size_settings"
+                android:text="@string/Communication_problems"
+                android:visibility="visible"
+                tools:visibility="visible" />
+
+            <Button
+                android:id="@+id/buttonUpDate"
+                style="@style/ButtonUpdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_left_text_title"
+                android:text="@string/Update"
+                android:visibility="visible"
+                tools:visibility="visible" />
+        </LinearLayout>
+
+    </FrameLayout>
 
 </LinearLayout>
