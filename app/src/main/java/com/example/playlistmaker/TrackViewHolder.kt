@@ -24,6 +24,7 @@ class TrackViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         trackName.text = model.trackName
         artistName.text = model.artistName
         trackTime.text = model.trackTime
+        
 
     }
 }

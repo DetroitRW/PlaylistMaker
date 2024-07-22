@@ -97,10 +97,20 @@
         </FrameLayout>
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/textViewYouSearch"
+        style="@style/HighText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/text_view_height"
+        android:text="@string/You_search"
+        android:textSize="@dimen/text_size_you_search"
+        android:visibility="gone" />
+
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-       >
+        android:layout_height="wrap_content">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
@@ -151,5 +161,14 @@
         </LinearLayout>
 
     </FrameLayout>
+
+    <Button
+        android:id="@+id/clearHistoryButton"
+        style="@style/ButtonUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/Clear_history"
+        android:visibility="gone" />
 
 </LinearLayout>

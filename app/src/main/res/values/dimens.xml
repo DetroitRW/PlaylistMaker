@@ -18,6 +18,7 @@
     <dimen name="picture_height_and_width">45dp</dimen>
     <dimen name="text_view_height">20dp</dimen>
     <dimen name="text_size_button">14sp</dimen>
+    <dimen name="text_size_you_search">19sp</dimen>
 
 
 </resources>
