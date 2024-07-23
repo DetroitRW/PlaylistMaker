@@ -51,8 +51,8 @@ class SearchActivity : AppCompatActivity() {
 
     private val trackService = retrofit.create(TrackAPI::class.java)
 
-    val searchResults = ArrayList<Track>()
-    val searchHistoryTracks = ArrayList<Track>()
+    private val searchResults = ArrayList<Track>()
+    private val searchHistoryTracks = ArrayList<Track>()
     val adapter = TrackAdapter(onTrackClick = { onTrackClick(it) })
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -122,7 +122,7 @@ class SearchActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s.isNullOrEmpty()) {
                     imageViewReset.visibility = View.INVISIBLE
-                    visibilitySearchView()
+                    checkEmptyHistory()
                 } else {
                     imageViewReset.visibility = View.VISIBLE
                     searchText = s.toString()
@@ -252,6 +252,16 @@ class SearchActivity : AppCompatActivity() {
 
     private fun upDateAdapterInSearch() {
         adapter.tracks = searchResults
+    }
+
+    private fun checkEmptyHistory() {
+        if (searchHistoryTracks.isNotEmpty()) {
+            visibilitySearchView()
+            upDateAdapterInHistory()
+            adapter.notifyDataSetChanged()
+        } else {
+            goneSearchView()
+        }
     }
 
 }

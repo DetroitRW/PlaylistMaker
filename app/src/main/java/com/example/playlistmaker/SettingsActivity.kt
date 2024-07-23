@@ -42,7 +42,6 @@ class SettingsActivity: AppCompatActivity() {
 
         if (nightMode) {
             switchThemes.isChecked = true
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         }
 
         switchThemes.setOnCheckedChangeListener { buttonView, isChecked ->

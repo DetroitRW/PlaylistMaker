@@ -24,12 +24,7 @@ class MainActivity : AppCompatActivity() {
         val buttonMediaLibrary: Button = findViewById(R.id.button_media_library)
         val buttonSettings: Button = findViewById(R.id.button_settings)
 
-        val sharedPreferences = getSharedPreferences("Mode", Context.MODE_PRIVATE)
-        val nightMode = sharedPreferences.getBoolean(SettingsActivity.NIGHT, false)
-
-        if (nightMode) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        }
+        checkNightMode()
 
         buttonSearch.setOnClickListener{
             val intentSearch = Intent(this, SearchActivity::class.java)
@@ -44,5 +39,16 @@ class MainActivity : AppCompatActivity() {
         buttonSettings.setOnClickListener {
             val intentSettings = Intent(this, SettingsActivity::class.java)
             startActivity(intentSettings)        }
+    }
+
+    private fun checkNightMode() {
+        val sharedPreferences = getSharedPreferences("Mode", Context.MODE_PRIVATE)
+        val nightMode = sharedPreferences.getBoolean(SettingsActivity.NIGHT, false)
+
+        if (nightMode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
     }
 }
