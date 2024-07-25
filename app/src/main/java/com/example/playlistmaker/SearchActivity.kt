@@ -163,7 +163,12 @@ class SearchActivity : AppCompatActivity() {
 
         trackService.findTrack(query).enqueue(object : Callback<TracksResponse> {
             override fun onResponse(call: Call<TracksResponse>, response: Response<TracksResponse>) {
-                if (response.isSuccessful) {
+                if (response.code() == 404) {
+                    showErrorNothingFound(true)
+                } else if (!response.isSuccessful) {
+                    showErrorCommunicationProblems(true)
+                    lastFailedRequest = query
+                } else {
                     val searchResponse = response.body()
                     if (searchResponse != null && searchResponse.results.isNotEmpty()) {
                         searchResults.clear()
@@ -180,9 +185,6 @@ class SearchActivity : AppCompatActivity() {
                     } else {
                         showErrorNothingFound(true)
                     }
-                } else {
-                    showErrorCommunicationProblems(true)
-                    lastFailedRequest = query
                 }
             }
 
@@ -258,6 +260,7 @@ class SearchActivity : AppCompatActivity() {
         if (searchHistoryTracks.isNotEmpty()) {
             visibilitySearchView()
             upDateAdapterInHistory()
+            errorClose()
             adapter.notifyDataSetChanged()
         } else {
             goneSearchView()

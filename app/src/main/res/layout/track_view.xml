@@ -48,7 +48,6 @@
         android:maxLines="1"
         android:textColor="@color/grey_for_icon"
         android:textSize="@dimen/text_size_artist_name"
-        android:tooltipText="The Beatles"
         app:layout_constraintStart_toEndOf="@+id/imageViewSongPicture"
         app:layout_constraintTop_toBottomOf="@+id/textViewTrackName" />
 
