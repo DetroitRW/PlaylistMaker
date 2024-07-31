@@ -35,6 +35,9 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var textViewError: TextView
     private lateinit var buttonUpDate: Button
     private lateinit var linerLayoutError: LinearLayout
+    private lateinit var textViewYouSearch: TextView
+    private lateinit var clearHistoryButton: Button
+    private lateinit var searchHistory: SearchHistory
     companion object {
         const val SEARCH_TEXT = "SEARCH_TEXT"
     }
@@ -48,8 +51,9 @@ class SearchActivity : AppCompatActivity() {
 
     private val trackService = retrofit.create(TrackAPI::class.java)
 
-    val tracks = ArrayList<Track>()
-    val adapter = TrackAdapter()
+    private val searchResults = ArrayList<Track>()
+    private val searchHistoryTracks = ArrayList<Track>()
+    val adapter = TrackAdapter(onTrackClick = { onTrackClick(it) })
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -68,9 +72,31 @@ class SearchActivity : AppCompatActivity() {
         buttonUpDate = findViewById(R.id.buttonUpDate)
         linerLayoutError = findViewById(R.id.linerLayoutError)
         editTextSearch = findViewById(R.id.editTextSearch)
+        textViewYouSearch = findViewById(R.id.textViewYouSearch)
+        clearHistoryButton = findViewById(R.id.clearHistoryButton)
 
-        adapter.tracks = tracks
+        adapter.tracks = searchResults
         recyclerView.adapter = adapter
+
+        searchHistory = SearchHistory(getSharedPreferences("app_prefs", MODE_PRIVATE))
+        searchHistoryTracks.addAll(searchHistory.getTracks())
+
+        editTextSearch.setOnFocusChangeListener { view, hasFocus ->
+            if (searchHistoryTracks.isNotEmpty() && hasFocus) {
+                visibilitySearchView()
+                upDateAdapterInHistory()
+                adapter.notifyDataSetChanged()
+            } else {
+                goneSearchView()
+            }
+        }
+
+        clearHistoryButton.setOnClickListener {
+            searchHistory.clearHistory()
+            searchHistoryTracks.clear()
+            adapter.notifyDataSetChanged()
+            goneSearchView()
+        }
 
         imageViewBack.setOnClickListener {
             finish()
@@ -78,7 +104,8 @@ class SearchActivity : AppCompatActivity() {
 
         imageViewReset.setOnClickListener {
             editTextSearch.setText("")
-            tracks.clear()
+            searchResults.clear()
+            upDateAdapterInHistory()
             adapter.notifyDataSetChanged()
             hideKeyboard()
             errorClose()
@@ -95,9 +122,12 @@ class SearchActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s.isNullOrEmpty()) {
                     imageViewReset.visibility = View.INVISIBLE
+                    checkEmptyHistory()
                 } else {
                     imageViewReset.visibility = View.VISIBLE
                     searchText = s.toString()
+                    goneSearchView()
+
                 }
             }
 
@@ -117,6 +147,7 @@ class SearchActivity : AppCompatActivity() {
 
         editTextSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
+                upDateAdapterInSearch()
                 performSearch(searchText)
                 true
             }
@@ -132,12 +163,18 @@ class SearchActivity : AppCompatActivity() {
 
         trackService.findTrack(query).enqueue(object : Callback<TracksResponse> {
             override fun onResponse(call: Call<TracksResponse>, response: Response<TracksResponse>) {
-                if (response.isSuccessful) {
+                if (response.code() == 404) {
+                    showErrorNothingFound(true)
+                } else if (!response.isSuccessful) {
+                    showErrorCommunicationProblems(true)
+                    lastFailedRequest = query
+                } else {
                     val searchResponse = response.body()
                     if (searchResponse != null && searchResponse.results.isNotEmpty()) {
-                        tracks.clear()
-                        tracks.addAll(searchResponse.results.map {
+                        searchResults.clear()
+                        searchResults.addAll(searchResponse.results.map {
                             Track(
+                                it.trackId,
                                 it.trackName,
                                 it.artistName,
                                 SimpleDateFormat("mm:ss", Locale.getDefault()).format(it.trackTimeMillis),
@@ -148,9 +185,6 @@ class SearchActivity : AppCompatActivity() {
                     } else {
                         showErrorNothingFound(true)
                     }
-                } else {
-                    showErrorCommunicationProblems(true)
-                    lastFailedRequest = query
                 }
             }
 
@@ -158,6 +192,13 @@ class SearchActivity : AppCompatActivity() {
                 showErrorCommunicationProblems(true)
             }
         })
+    }
+
+    private fun onTrackClick(track: Track) {
+        searchHistory.addTrack(track)
+        searchHistoryTracks.clear()
+        searchHistoryTracks.addAll(searchHistory.getTracks())
+        adapter.notifyDataSetChanged()
     }
 
     fun errorClose() {
@@ -195,5 +236,35 @@ class SearchActivity : AppCompatActivity() {
         inputMethodManager?.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
     }
 
+    private fun goneSearchView() {
+        recyclerView.visibility = View.GONE
+        textViewYouSearch.visibility = View.GONE
+        clearHistoryButton.visibility = View.GONE
+    }
+
+    private fun visibilitySearchView() {
+        recyclerView.visibility = View.VISIBLE
+        textViewYouSearch.visibility = View.VISIBLE
+        clearHistoryButton.visibility = View.VISIBLE
+    }
+
+    private fun upDateAdapterInHistory() {
+        adapter.tracks = searchHistoryTracks
+    }
+
+    private fun upDateAdapterInSearch() {
+        adapter.tracks = searchResults
+    }
+
+    private fun checkEmptyHistory() {
+        if (searchHistoryTracks.isNotEmpty()) {
+            visibilitySearchView()
+            upDateAdapterInHistory()
+            errorClose()
+            adapter.notifyDataSetChanged()
+        } else {
+            goneSearchView()
+        }
+    }
 
 }
