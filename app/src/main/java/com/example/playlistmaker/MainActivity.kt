@@ -38,7 +38,8 @@ class MainActivity : AppCompatActivity() {
 
         buttonSettings.setOnClickListener {
             val intentSettings = Intent(this, SettingsActivity::class.java)
-            startActivity(intentSettings)        }
+            startActivity(intentSettings)
+        }
     }
 
     private fun checkNightMode() {

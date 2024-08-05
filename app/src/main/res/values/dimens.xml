@@ -19,6 +19,7 @@
     <dimen name="text_view_height">20dp</dimen>
     <dimen name="text_size_button">14sp</dimen>
     <dimen name="text_size_you_search">19sp</dimen>
+    <dimen name="AudioPlayerTextDescription">13sp</dimen>
 
 
 </resources>

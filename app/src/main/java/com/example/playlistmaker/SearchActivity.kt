@@ -1,5 +1,6 @@
 package com.example.playlistmaker
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -53,7 +55,7 @@ class SearchActivity : AppCompatActivity() {
 
     private val searchResults = ArrayList<Track>()
     private val searchHistoryTracks = ArrayList<Track>()
-    val adapter = TrackAdapter(onTrackClick = { onTrackClick(it) })
+    val adapter = TrackAdapter(onTrackClick = {onTrackClick(it)})
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -149,7 +151,6 @@ class SearchActivity : AppCompatActivity() {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 upDateAdapterInSearch()
                 performSearch(searchText)
-                true
             }
             false
         }
@@ -178,7 +179,11 @@ class SearchActivity : AppCompatActivity() {
                                 it.trackName,
                                 it.artistName,
                                 SimpleDateFormat("mm:ss", Locale.getDefault()).format(it.trackTimeMillis),
-                                it.artworkUrl100)
+                                it.artworkUrl100,
+                                it.collectionName,
+                                it.releaseDate,
+                                it.primaryGenreName,
+                                it.country)
                         })
                         adapter.notifyDataSetChanged()
                         showErrorCommunicationProblems(false)
@@ -190,6 +195,7 @@ class SearchActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<TracksResponse>, t: Throwable) {
                 showErrorCommunicationProblems(true)
+                lastFailedRequest = query
             }
         })
     }
@@ -199,6 +205,7 @@ class SearchActivity : AppCompatActivity() {
         searchHistoryTracks.clear()
         searchHistoryTracks.addAll(searchHistory.getTracks())
         adapter.notifyDataSetChanged()
+        startActivityAudioPlayer(track)
     }
 
     fun errorClose() {
@@ -265,6 +272,14 @@ class SearchActivity : AppCompatActivity() {
         } else {
             goneSearchView()
         }
+    }
+
+    private fun startActivityAudioPlayer(track: Track) {
+        val jsonTrack = Gson().toJson(track)
+
+        val intent = Intent(this, AudioPlayerActivity::class.java)
+        intent.putExtra("SELECTED_TRACK", jsonTrack)
+        startActivity(intent)
     }
 
 }
