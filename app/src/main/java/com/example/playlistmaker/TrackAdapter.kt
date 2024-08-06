@@ -19,7 +19,4 @@ class TrackAdapter(val onTrackClick: (Track) -> Unit): RecyclerView.Adapter<Trac
             onTrackClick(tracks[position])
         }
     }
-
-
-
 }
