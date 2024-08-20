@@ -2,6 +2,8 @@ package com.example.playlistmaker
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -9,8 +11,10 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -40,8 +44,12 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var textViewYouSearch: TextView
     private lateinit var clearHistoryButton: Button
     private lateinit var searchHistory: SearchHistory
+    private lateinit var progressBar: ProgressBar
+    private lateinit var frameLayout: FrameLayout
     companion object {
-        const val SEARCH_TEXT = "SEARCH_TEXT"
+        private const val SEARCH_TEXT = "SEARCH_TEXT"
+        private const val CLICK_DEBOUNCE_DELAY = 1000L
+        private const val SEARCH_DEBOUNCE_DELAY = 2000L
     }
 
     private val translateBaseUrl = "https://itunes.apple.com"
@@ -55,7 +63,14 @@ class SearchActivity : AppCompatActivity() {
 
     private val searchResults = ArrayList<Track>()
     private val searchHistoryTracks = ArrayList<Track>()
-    val adapter = TrackAdapter(onTrackClick = {onTrackClick(it)})
+    private val handler = Handler(Looper.getMainLooper())
+    private var isClickAllowed = true
+    private val searchRunnable = Runnable { performSearch(searchText) }
+    val adapter = TrackAdapter {
+        if (clickDebounce()) {
+            onTrackClick(it)
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -76,6 +91,8 @@ class SearchActivity : AppCompatActivity() {
         editTextSearch = findViewById(R.id.editTextSearch)
         textViewYouSearch = findViewById(R.id.textViewYouSearch)
         clearHistoryButton = findViewById(R.id.clearHistoryButton)
+        progressBar = findViewById(R.id.progressBar)
+        frameLayout = findViewById(R.id.frameLayout)
 
         adapter.tracks = searchResults
         recyclerView.adapter = adapter
@@ -129,7 +146,7 @@ class SearchActivity : AppCompatActivity() {
                     imageViewReset.visibility = View.VISIBLE
                     searchText = s.toString()
                     goneSearchView()
-
+                    searchDebounce()
                 }
             }
 
@@ -156,14 +173,17 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    fun performSearch(query: String?) {
+    private fun performSearch(query: String?) {
         if (query.isNullOrEmpty()) {
             showErrorNothingFound(true)
             return
         }
 
+        makeVisibleProgressBar()
+
         trackService.findTrack(query).enqueue(object : Callback<TracksResponse> {
             override fun onResponse(call: Call<TracksResponse>, response: Response<TracksResponse>) {
+                makeGoneProgressBar()
                 if (response.code() == 404) {
                     showErrorNothingFound(true)
                 } else if (!response.isSuccessful) {
@@ -183,7 +203,8 @@ class SearchActivity : AppCompatActivity() {
                                 it.collectionName,
                                 it.releaseDate,
                                 it.primaryGenreName,
-                                it.country)
+                                it.country,
+                                it.previewUrl)
                         })
                         adapter.notifyDataSetChanged()
                         showErrorCommunicationProblems(false)
@@ -194,10 +215,36 @@ class SearchActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<TracksResponse>, t: Throwable) {
+                makeGoneProgressBar()
                 showErrorCommunicationProblems(true)
                 lastFailedRequest = query
             }
         })
+    }
+
+    private fun makeVisibleProgressBar() {
+        frameLayout.visibility = View.GONE
+        progressBar.visibility = View.VISIBLE
+    }
+
+    private fun makeGoneProgressBar() {
+        frameLayout.visibility = View.VISIBLE
+        progressBar.visibility = View.GONE
+    }
+
+    private fun searchDebounce() {
+        handler.removeCallbacks(searchRunnable)
+        handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY)
+        upDateAdapterInSearch()
+    }
+
+    private fun clickDebounce() : Boolean {
+        val current = isClickAllowed
+        if (isClickAllowed) {
+            isClickAllowed = false
+            handler.postDelayed({ isClickAllowed = true }, CLICK_DEBOUNCE_DELAY)
+        }
+        return current
     }
 
     private fun onTrackClick(track: Track) {
