@@ -222,6 +222,11 @@ class SearchActivity : AppCompatActivity() {
         })
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacks(searchRunnable)
+    }
+
     private fun makeVisibleProgressBar() {
         frameLayout.visibility = View.GONE
         progressBar.visibility = View.VISIBLE

@@ -45,16 +45,16 @@ class AudioPlayerActivity: AppCompatActivity() {
         private const val STATE_PREPARED = 1
         private const val STATE_PLAYING = 2
         private const val STATE_PAUSED = 3
-
-        private const val DELAY = 1000L
-        private const val TRACK_TIME = 30L
     }
 
-    private var elapsedTime: Long = 0L
+
 
     private var mainThreadHandler: Handler? = null
 
     private var playerState = STATE_DEFAULT
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,6 +84,7 @@ class AudioPlayerActivity: AppCompatActivity() {
 
         setUpView()
 
+
         finishActivity = findViewById(R.id.imageViewBack)
         finishActivity.setOnClickListener {
             finish()
@@ -94,36 +95,6 @@ class AudioPlayerActivity: AppCompatActivity() {
         playButton.setOnClickListener {
             playbackControl()
         }
-    }
-
-    private fun startTimer(duration: Long) {
-        val startTime = System.currentTimeMillis() - elapsedTime
-        mainThreadHandler?.post(createUpdateTimerTask(startTime, duration * DELAY))
-    }
-
-    private fun createUpdateTimerTask(startTime: Long, duration: Long): Runnable {
-        return object : Runnable {
-            override fun run() {
-                elapsedTime = System.currentTimeMillis() - startTime
-                val remainingTime = duration - elapsedTime
-
-                if (remainingTime > 0) {
-                    val seconds = elapsedTime / DELAY
-                    trackTimeTextView?.text = String.format("%d:%02d", seconds / 60, seconds % 60)
-                    mainThreadHandler?.postDelayed(this, DELAY)
-
-                } else {
-                    trackTimeTextView?.text = "0:00"
-                    playButton.setImageResource(R.drawable.play_button)
-                    playButton?.isEnabled = true
-                    elapsedTime = 0L
-                }
-            }
-        }
-    }
-
-    private fun pauseTimer() {
-        mainThreadHandler?.removeCallbacksAndMessages(null) // Stop the timer
     }
 
     override fun onPause() {
@@ -146,6 +117,18 @@ class AudioPlayerActivity: AppCompatActivity() {
         mediaPlayer.setOnCompletionListener {
             playButton.setImageResource(R.drawable.play_button)
             playerState = STATE_PREPARED
+            resetTimer()
+        }
+    }
+
+    private fun updateTimerRunnable(): Runnable {
+        return object : Runnable {
+            override fun run() {
+                if (playerState == STATE_PLAYING) {
+                    trackTimeTextView.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(mediaPlayer.currentPosition)
+                    mainThreadHandler?.postDelayed(this, 500L)
+                }
+            }
         }
     }
 
@@ -153,14 +136,19 @@ class AudioPlayerActivity: AppCompatActivity() {
         mediaPlayer.start()
         playButton.setImageResource(R.drawable.pause_button)
         playerState = STATE_PLAYING
-        startTimer(TRACK_TIME)
+        mainThreadHandler?.post(updateTimerRunnable())
     }
 
     private fun pausePlayer() {
         mediaPlayer.pause()
         playButton.setImageResource(R.drawable.play_button)
         playerState = STATE_PAUSED
-        pauseTimer()
+        mainThreadHandler?.removeCallbacks(updateTimerRunnable())
+    }
+
+    private fun resetTimer() {
+        mainThreadHandler?.removeCallbacks(updateTimerRunnable())
+        trackTimeTextView.text = "00:00"
     }
 
     private fun playbackControl() {
