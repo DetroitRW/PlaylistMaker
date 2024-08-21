@@ -1,6 +1,9 @@
 package com.example.playlistmaker
 
+import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -26,11 +29,32 @@ class AudioPlayerActivity: AppCompatActivity() {
     private lateinit var yearDownloadTextView: TextView
     private lateinit var genreDownloadTextView: TextView
     private lateinit var countryDownloadTextView: TextView
+    private lateinit var trackTimeTextView: TextView
 
     private lateinit var finishActivity: ImageView
     private lateinit var addButton: ImageView
     private lateinit var playButton: ImageView
     private lateinit var likeButton: ImageView
+
+    private lateinit var trackUrl: String
+
+    private var mediaPlayer = MediaPlayer()
+
+    companion object {
+        private const val STATE_DEFAULT = 0
+        private const val STATE_PREPARED = 1
+        private const val STATE_PLAYING = 2
+        private const val STATE_PAUSED = 3
+    }
+
+
+
+    private var mainThreadHandler: Handler? = null
+
+    private var playerState = STATE_DEFAULT
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +66,8 @@ class AudioPlayerActivity: AppCompatActivity() {
             insets
         }
 
+        mainThreadHandler = Handler(Looper.getMainLooper())
+
         songPictureImageView = findViewById(R.id.imageViewSongPicture)
         durationDownloadTextView = findViewById(R.id.textViewDurationDownload)
         albumDownloadTextView = findViewById(R.id.textViewAlbumDownload)
@@ -50,6 +76,7 @@ class AudioPlayerActivity: AppCompatActivity() {
         countryDownloadTextView = findViewById(R.id.textViewCountryDownload)
         trackNameTextView = findViewById(R.id.textViewTrackName)
         artistNameTextView = findViewById(R.id.textViewArtistName)
+        trackTimeTextView = findViewById(R.id.textViewTrackTime)
 
         addButton = findViewById(R.id.addButton)
         playButton = findViewById(R.id.playButton)
@@ -57,9 +84,81 @@ class AudioPlayerActivity: AppCompatActivity() {
 
         setUpView()
 
+
         finishActivity = findViewById(R.id.imageViewBack)
         finishActivity.setOnClickListener {
             finish()
+        }
+
+        preparePlayer()
+
+        playButton.setOnClickListener {
+            playbackControl()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        pausePlayer()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mediaPlayer.release()
+    }
+
+    private fun preparePlayer() {
+        mediaPlayer.setDataSource(trackUrl)
+        mediaPlayer.prepareAsync()
+        mediaPlayer.setOnPreparedListener {
+            playButton.isEnabled = true
+            playerState = STATE_PREPARED
+        }
+        mediaPlayer.setOnCompletionListener {
+            playButton.setImageResource(R.drawable.play_button)
+            playerState = STATE_PREPARED
+            resetTimer()
+        }
+    }
+
+    private fun updateTimerRunnable(): Runnable {
+        return object : Runnable {
+            override fun run() {
+                if (playerState == STATE_PLAYING) {
+                    trackTimeTextView.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(mediaPlayer.currentPosition)
+                    mainThreadHandler?.postDelayed(this, 500L)
+                }
+            }
+        }
+    }
+
+    private fun startPlayer() {
+        mediaPlayer.start()
+        playButton.setImageResource(R.drawable.pause_button)
+        playerState = STATE_PLAYING
+        mainThreadHandler?.post(updateTimerRunnable())
+    }
+
+    private fun pausePlayer() {
+        mediaPlayer.pause()
+        playButton.setImageResource(R.drawable.play_button)
+        playerState = STATE_PAUSED
+        mainThreadHandler?.removeCallbacks(updateTimerRunnable())
+    }
+
+    private fun resetTimer() {
+        mainThreadHandler?.removeCallbacks(updateTimerRunnable())
+        trackTimeTextView.text = "00:00"
+    }
+
+    private fun playbackControl() {
+        when(playerState) {
+            STATE_PLAYING -> {
+                pausePlayer()
+            }
+            STATE_PREPARED, STATE_PAUSED -> {
+                startPlayer()
+            }
         }
     }
 
@@ -75,6 +174,7 @@ class AudioPlayerActivity: AppCompatActivity() {
                 .placeholder(R.drawable.placeholder)
                 .into(songPictureImageView)
 
+            trackUrl = track.previewUrl!!
             trackNameTextView.text = track.trackName
             artistNameTextView.text = track.artistName
             durationDownloadTextView.text = track.trackTime
