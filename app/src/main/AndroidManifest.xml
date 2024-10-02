@@ -13,23 +13,23 @@
         android:theme="@style/Base.Theme.PlaylistMaker"
         tools:targetApi="31">
         <activity
-            android:name=".SettingsActivity"
+            android:name=".presentation.SettingsActivity"
             android:exported="false"
             />
         <activity
-            android:name=".MediaLibraryActivity"
+            android:name=".presentation.MediaLibraryActivity"
             android:exported="false"
             />
         <activity
-            android:name=".SearchActivity"
+            android:name=".ui.track.SearchActivity"
             android:exported="false"
             />
         <activity
-            android:name=".AudioPlayerActivity"
+            android:name=".ui.audioplayer.AudioPlayerActivity"
             android:exported="false"
             />
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.MainActivity"
             android:exported="true"
             >
             <intent-filter>

@@ -1,4 +1,4 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.ui.track
 
 import android.content.Intent
 import android.os.Bundle
@@ -21,6 +21,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.playlistmaker.R
+import com.example.playlistmaker.data.dto.SearchHistory
+import com.example.playlistmaker.data.dto.TracksSearchResponse
+import com.example.playlistmaker.domain.models.Track
+import com.example.playlistmaker.data.network.TrackAPI
+import com.example.playlistmaker.ui.audioplayer.AudioPlayerActivity
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
@@ -181,8 +187,8 @@ class SearchActivity : AppCompatActivity() {
 
         makeVisibleProgressBar()
 
-        trackService.findTrack(query).enqueue(object : Callback<TracksResponse> {
-            override fun onResponse(call: Call<TracksResponse>, response: Response<TracksResponse>) {
+        trackService.findTrack(query).enqueue(object : Callback<TracksSearchResponse> {
+            override fun onResponse(call: Call<TracksSearchResponse>, response: Response<TracksSearchResponse>) {
                 makeGoneProgressBar()
                 if (response.code() == 404) {
                     showErrorNothingFound(true)
@@ -214,7 +220,7 @@ class SearchActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<TracksResponse>, t: Throwable) {
+            override fun onFailure(call: Call<TracksSearchResponse>, t: Throwable) {
                 makeGoneProgressBar()
                 showErrorCommunicationProblems(true)
                 lastFailedRequest = query
