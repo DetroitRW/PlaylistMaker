@@ -16,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:context=".MainActivity">
+        tools:context=".presentation.MainActivity">
 
         <TextView
             android:id="@+id/mainTitle"

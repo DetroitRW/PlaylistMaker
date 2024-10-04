@@ -1,8 +1,10 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.ui.track
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.playlistmaker.R
+import com.example.playlistmaker.domain.models.Track
 
 class TrackAdapter(val onTrackClick: (Track) -> Unit): RecyclerView.Adapter<TrackViewHolder> ()  {
     var tracks = ArrayList<Track>()
